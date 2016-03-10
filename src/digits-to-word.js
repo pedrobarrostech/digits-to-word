@@ -23,7 +23,7 @@ class DigitsToWord {
            myNumber : this.number,
             onlyDigits :  function(myNumber){  
                 if (typeof myNumber === 'string') {
-                    var exp = /[^\d]/ig;
+                    let exp = /[^\d]/ig;
                     myNumber = myNumber.replace(exp,"");
                 }
                 if (myNumber !== "") {
@@ -62,7 +62,7 @@ class DigitsToWord {
         } else if (typeof (input) == 'number'){
             return (this.digitsToWord().noDecimals(input).toString);
         } else if (typeof (input) == 'string') {
-            var tempNum = this.digitsToWord().noDecimalsString(input);
+            let tempNum = this.digitsToWord().noDecimalsString(input);
             if (tempNum instanceof Error) {
                 return (tempNum);
             } else if ((this.digitsToWord().onlyDigits(tempNum).length > 16)) {
@@ -77,16 +77,16 @@ class DigitsToWord {
         
     //turn number into an array
     arrayify(input) {
-        var stringNum;
+        let stringNum;
         if (typeof (input) == 'string'){
             stringNum = input;
         }
         else {
             stringNum = input.toString();
         }
-        var arrayOfNums = stringNum.split("");
-        var length = arrayOfNums.length;
-        for(var i=0; i<length; i++) { arrayOfNums[i] = +arrayOfNums[i]; }
+        let arrayOfNums = stringNum.split("");
+        let length = arrayOfNums.length;
+        for(let i=0; i<length; i++) { arrayOfNums[i] = +arrayOfNums[i]; }
         return arrayOfNums;
     }
 
@@ -95,30 +95,30 @@ class DigitsToWord {
     spellItOut(number) {
         this._powers = ['', 'hundred', ' thousand,', ' million,', ' billion,', ' trillion,', ' quadrillion,', ' quintillion,', ' sextillion,'];
         
-        //let's make some variables
-        var spelledNums = [];
+        //let's make some letiables
+        let spelledNums = [];
        //what we return
-        var spelledArray = [];
+        let spelledArray = [];
         //tempNums is a temporary array to count backwards by threes
-        var tempNums = [];
+        let tempNums = [];
         //create an array from the number string
-        var arrayOfNums = this.arrayify(number);
+        let arrayOfNums = this.arrayify(number);
         console.log(arrayOfNums);
         //get the length
-        var myLength = arrayOfNums.length;
+        let myLength = arrayOfNums.length;
         // make an array of arrays, counting from the end of the number = 123,456 = [[4,5,6], [1,2,3]]
         while (myLength > 0) {
             tempNums.push(arrayOfNums.splice(-3, 3));
             myLength = (myLength - 3);
         }
-        var tempNumlength = tempNums.length;  
+        let tempNumlength = tempNums.length;  
         //okay let's look at each chunk one by one    
-        for(var i=0; i<tempNumlength; i++) {
+        for(let i=0; i<tempNumlength; i++) {
             //reverse it, because that way you know the relevant teen digit is always array[1]
-            var miniArray = tempNums[i].reverse();
+            let miniArray = tempNums[i].reverse();
             //check if the middle digit is a 1, in which case it's a "teen" number
             if ((miniArray[1] === 1)) {
-                    var teenNum = (miniArray[1]).toString() + (miniArray[0]).toString();
+                    let teenNum = (miniArray[1]).toString() + (miniArray[0]).toString();
                     if (i === 0) {
                         spelledNums.push(this.underTwenty(+teenNum));
                     } else {
@@ -168,28 +168,28 @@ class DigitsToWord {
         function isNotEmpty(element) {
           return element !== " ";
         }
-        var arrayNum = [];
+        let arrayNum = [];
         arrayNum = myNumber;
         //make sure it's not empty
-        var phrasifiedNums = arrayNum.filter(isNotEmpty);
+        let phrasifiedNums = arrayNum.filter(isNotEmpty);
         // turn it into one string
-        var numPhrase = phrasifiedNums.join(" ");
+        let numPhrase = phrasifiedNums.join(" ");
         //take out spaces
-        var noSpaces = numPhrase.replace(/  /, " ");
+        let noSpaces = numPhrase.replace(/  /, " ");
         //clean up hyphens
-        var fixHyphens = noSpaces.replace(/- /gi, "-");
+        let fixHyphens = noSpaces.replace(/- /gi, "-");
         //remove unnecessary terminal hyphens
-        var fixTerminalHyphens = fixHyphens.replace(/- /gi, " ");
+        let fixTerminalHyphens = fixHyphens.replace(/- /gi, " ");
         //take out unnecessary ands
-        var extraneousAnds = fixTerminalHyphens.replace(/and$/, "");
-        // returning new variable just in case I think of anything else to clean
-        var finalPhrase = extraneousAnds;
+        let extraneousAnds = fixTerminalHyphens.replace(/and$/, "");
+        // returning new letiable just in case I think of anything else to clean
+        let finalPhrase = extraneousAnds;
         return finalPhrase;
     }
 
     // let's treat zero as a special case
     checkZero(number) {
-        var newNumber = parseInt(number, 10);
+        let newNumber = parseInt(number, 10);
         if (newNumber === 0) {
             //returning array here 
             return ['zero']; 
@@ -203,7 +203,7 @@ class DigitsToWord {
 
     // let's check for negative numbers
     checkNegative(number) {
-        var negExpr = /^-/;
+        let negExpr = /^-/;
         if (negExpr.test(number)) {
             //returning array here 
             return('negative '); 
@@ -215,26 +215,26 @@ class DigitsToWord {
 
     finalFunction(number) {
         //clean input
-        var cleanNumber = this.checkTypeAndLength(number);
+        let cleanNumber = this.checkTypeAndLength(number);
         if (cleanNumber instanceof Error) {
             return (cleanNumber);
         }
         //check for negative case
-        var negative = this.checkNegative(number);
+        let negative = this.checkNegative(number);
         //check for zero special case
         if (this.checkZero(cleanNumber) == 'zero') {
             return ('zero');
         } else {
             //get the non-zero output of cleanNumber
-            var noZeros = this.checkZero(cleanNumber);
+            let noZeros = this.checkZero(cleanNumber);
             console.log(noZeros);
             //get the array of number words
-            var wordArray = this.spellItOut(noZeros);
+            let wordArray = this.spellItOut(noZeros);
             console.log(wordArray);
             //make it into a pretty phrase
-            var phrasedResult = this.phrasify(wordArray);
+            let phrasedResult = this.phrasify(wordArray);
             // add the output of the negative check above
-            var finalOutput = negative + phrasedResult;
+            let finalOutput = negative + phrasedResult;
             //return it
             return (finalOutput);
         }
