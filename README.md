@@ -1,3 +1,5 @@
+# Digits to word
+
 [![Build Status](https://travis-ci.org/pedrobarrostech/digits-to-word.png?branch=master)](https://travis-ci.org/pedrobarrostech/digits-to-word)
 [![Coverage Status](https://img.shields.io/coveralls/pedrobarrostech/digits-to-word.svg)](https://coveralls.io/r/pedrobarrostech/digits-to-word?branch=master)
 
